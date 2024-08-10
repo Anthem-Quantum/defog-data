@@ -10,17 +10,17 @@ packages = [
 ]
 
 include = [
-    { path = "defog_data/academic", format = ["sdist", "wheel"] },
-    { path = "defog_data/advising", format = ["sdist", "wheel"] },
-    { path = "defog_data/atis", format = ["sdist", "wheel"] },
-    { path = "defog_data/broker", format = ["sdist", "wheel"] },
-    { path = "defog_data/car_dealership", format = ["sdist", "wheel"]},
-    { path = "defog_data/derm_treatment", format = ["sdist", "wheel"]},
-    { path = "defog_data/ewallet", format = ["sdist", "wheel"]},
-    { path = "defog_data/geography", format = ["sdist", "wheel"]},
-    { path = "defog_data/restaurants", format = ["sdist", "wheel"]},
-    { path = "defog_data/scholar", format = ["sdist", "wheel"]},
-    { path = "defog_data/yelp", format = ["sdist", "wheel"]},
+    { path = "defog_data/academic/academic.json", format = ["sdist", "wheel"] },
+    { path = "defog_data/advising/advising.json", format = ["sdist", "wheel"] },
+    { path = "defog_data/atis/atis.json", format = ["sdist", "wheel"] },
+    { path = "defog_data/broker/broker.json", format = ["sdist", "wheel"] },
+    { path = "defog_data/car_dealership/car_dealership.json", format = ["sdist", "wheel"]},
+    { path = "defog_data/derm_treatment/derm_treatment.json", format = ["sdist", "wheel"]},
+    { path = "defog_data/ewallet/ewallet.json", format = ["sdist", "wheel"]},
+    { path = "defog_data/geography/geography.json", format = ["sdist", "wheel"]},
+    { path = "defog_data/restaurants/restaurants.json", format = ["sdist", "wheel"]},
+    { path = "defog_data/scholar/scholar.json", format = ["sdist", "wheel"]},
+    { path = "defog_data/yelp/yelp.json", format = ["sdist", "wheel"]},
 ]
 
 [tool.poetry.dependencies]
