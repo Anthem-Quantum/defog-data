@@ -1,0 +1,32 @@
+[tool.poetry]
+name = "defog-data"
+version = "0.1.0"
+description = "Defog data."
+authors = ["Anubhav Rana <anubhav.rana@anthem.com>"]
+readme = "README.md"
+
+packages = [
+    { include = "defog_data", from = "./" },
+]
+
+include = [
+    { path = "defog_data/academic", format = ["sdist", "wheel"] },
+    { path = "defog_data/advising", format = ["sdist", "wheel"] },
+    { path = "defog_data/atis", format = ["sdist", "wheel"] },
+    { path = "defog_data/broker", format = ["sdist", "wheel"] },
+    { path = "defog_data/car_dealership", format = ["sdist", "wheel"]},
+    { path = "defog_data/derm_treatment", format = ["sdist", "wheel"]},
+    { path = "defog_data/ewallet", format = ["sdist", "wheel"]},
+    { path = "defog_data/geography", format = ["sdist", "wheel"]},
+    { path = "defog_data/restaurants", format = ["sdist", "wheel"]},
+    { path = "defog_data/scholar", format = ["sdist", "wheel"]},
+    { path = "defog_data/yelp", format = ["sdist", "wheel"]},
+]
+
+[tool.poetry.dependencies]
+python = "^3.11"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
