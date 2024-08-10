@@ -1,67 +1,68 @@
-from defog_data.metadata import dbs
-import logging
+# from defog_data.metadata import dbs
+# import logging
 import os
-import pickle
-from sentence_transformers import SentenceTransformer
+
+# import pickle
+# from sentence_transformers import SentenceTransformer
 import re
 
 # get package root directory
 root_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 
-def generate_embeddings(emb_path: str, save_emb: bool = True) -> tuple[dict, dict]:
-    """
-    For each db, generate embeddings for all of the column names and descriptions
-    """
-    encoder = SentenceTransformer(
-        "sentence-transformers/all-MiniLM-L6-v2", device="cpu"
-    )
-    emb = {}
-    csv_descriptions = {}
-    glossary_emb = {}
-    for db_name, db in dbs.items():
-        metadata = db["table_metadata"]
-        glossary = clean_glossary(db["glossary"])
-        column_descriptions = []
-        column_descriptions_typed = []
-        for table in metadata:
-            for column in metadata[table]:
-                col_str = (
-                    table
-                    + "."
-                    + column["column_name"]
-                    + ": "
-                    + column["column_description"]
-                )
-                col_str_typed = (
-                    table
-                    + "."
-                    + column["column_name"]
-                    + ","
-                    + column["data_type"]
-                    + ","
-                    + column["column_description"]
-                )
-                column_descriptions.append(col_str)
-                column_descriptions_typed.append(col_str_typed)
-        column_emb = encoder.encode(column_descriptions, convert_to_tensor=True)
-        emb[db_name] = column_emb
-        csv_descriptions[db_name] = column_descriptions_typed
-        logging.info(f"Finished embedding {db_name} {len(column_descriptions)} columns")
-        if len(glossary) > 0:
-            glossary_embeddings = encoder.encode(glossary, convert_to_tensor=True)
-        else:
-            glossary_embeddings = []
-        glossary_emb[db_name] = glossary_embeddings
-    if save_emb:
-        # get directory of emb_path and create if it doesn't exist
-        emb_dir = os.path.dirname(emb_path)
-        if not os.path.exists(emb_dir):
-            os.makedirs(emb_dir)
-        with open(emb_path, "wb") as f:
-            pickle.dump((emb, csv_descriptions, glossary_emb), f)
-            logging.info(f"Saved embeddings to file {emb_path}")
-    return emb, csv_descriptions, glossary_emb
+# def generate_embeddings(emb_path: str, save_emb: bool = True) -> tuple[dict, dict]:
+#     """
+#     For each db, generate embeddings for all of the column names and descriptions
+#     """
+#     encoder = SentenceTransformer(
+#         "sentence-transformers/all-MiniLM-L6-v2", device="cpu"
+#     )
+#     emb = {}
+#     csv_descriptions = {}
+#     glossary_emb = {}
+#     for db_name, db in dbs.items():
+#         metadata = db["table_metadata"]
+#         glossary = clean_glossary(db["glossary"])
+#         column_descriptions = []
+#         column_descriptions_typed = []
+#         for table in metadata:
+#             for column in metadata[table]:
+#                 col_str = (
+#                     table
+#                     + "."
+#                     + column["column_name"]
+#                     + ": "
+#                     + column["column_description"]
+#                 )
+#                 col_str_typed = (
+#                     table
+#                     + "."
+#                     + column["column_name"]
+#                     + ","
+#                     + column["data_type"]
+#                     + ","
+#                     + column["column_description"]
+#                 )
+#                 column_descriptions.append(col_str)
+#                 column_descriptions_typed.append(col_str_typed)
+#         column_emb = encoder.encode(column_descriptions, convert_to_tensor=True)
+#         emb[db_name] = column_emb
+#         csv_descriptions[db_name] = column_descriptions_typed
+#         logging.info(f"Finished embedding {db_name} {len(column_descriptions)} columns")
+#         if len(glossary) > 0:
+#             glossary_embeddings = encoder.encode(glossary, convert_to_tensor=True)
+#         else:
+#             glossary_embeddings = []
+#         glossary_emb[db_name] = glossary_embeddings
+#     if save_emb:
+#         # get directory of emb_path and create if it doesn't exist
+#         emb_dir = os.path.dirname(emb_path)
+#         if not os.path.exists(emb_dir):
+#             os.makedirs(emb_dir)
+#         with open(emb_path, "wb") as f:
+#             pickle.dump((emb, csv_descriptions, glossary_emb), f)
+#             logging.info(f"Saved embeddings to file {emb_path}")
+#     return emb, csv_descriptions, glossary_emb
 
 
 def clean_glossary(glossary: str) -> list[str]:
@@ -84,19 +85,19 @@ def clean_glossary(glossary: str) -> list[str]:
     return glossary
 
 
-def load_embeddings(emb_path: str) -> tuple[dict, dict]:
-    """
-    Load embeddings from file if they exist, otherwise generate them and save them.
-    """
-    if os.path.isfile(emb_path):
-        logging.info(f"Loading embeddings from file {emb_path}")
-        with open(emb_path, "rb") as f:
-            emb, csv_descriptions, glossary_emb = pickle.load(f)
-        return emb, csv_descriptions, glossary_emb
-    else:
-        logging.info(f"Embeddings file {emb_path} does not exist.")
-        emb, csv_descriptions, glossary_emb = generate_embeddings(emb_path)
-        return emb, csv_descriptions, glossary_emb
+# def load_embeddings(emb_path: str) -> tuple[dict, dict]:
+#     """
+#     Load embeddings from file if they exist, otherwise generate them and save them.
+#     """
+#     if os.path.isfile(emb_path):
+#         logging.info(f"Loading embeddings from file {emb_path}")
+#         with open(emb_path, "rb") as f:
+#             emb, csv_descriptions, glossary_emb = pickle.load(f)
+#         return emb, csv_descriptions, glossary_emb
+#     else:
+#         logging.info(f"Embeddings file {emb_path} does not exist.")
+#         emb, csv_descriptions, glossary_emb = generate_embeddings(emb_path)
+#         return emb, csv_descriptions, glossary_emb
 
 
 # entity types: list of (column, type, description) tuples
